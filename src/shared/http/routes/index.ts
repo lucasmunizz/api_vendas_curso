@@ -8,7 +8,7 @@ const routes = Router();
 
 routes.use('/products', productsRouter);
 routes.use('/users', usersRouter);
-routes.use('/session', sessionRoutes);
+routes.use('/sessions', sessionRoutes);
 // routes.get('/', (request: Request, response: Response) => {
 //   response.send('teste');
 // });
