@@ -10,7 +10,7 @@ interface IRequest {
   password: string;
 }
 
-export default class CreateProductService {
+export default class CreateUserService {
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository);
 
