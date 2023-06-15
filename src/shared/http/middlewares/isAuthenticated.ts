@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import AppError from '../../../shared/errors/AppError';
+import AppError from '../../errors/AppError';
 import authConfig from '../../../config/auth';
+
+interface TokenRequest {
+  sub: string;
+  exp: number;
+  iat: number;
+}
 
 export default function isAuthenticated(
   request: Request,
@@ -17,7 +23,13 @@ export default function isAuthenticated(
   const [, token] = authHeader.split(' ');
 
   try {
-    const decodeToken = verify(token, authConfig.jwt.secret);
+    const decodedToken = verify(token, authConfig.jwt.secret);
+
+    const { sub } = decodedToken as TokenRequest;
+
+    request.user = {
+      id: sub,
+    };
     return next();
   } catch {
     throw new AppError('invalid JWT');
