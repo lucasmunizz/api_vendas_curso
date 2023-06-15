@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import productsRouter from '../../../modules/products/routes/ProductRouter';
 import usersRouter from '../../../modules/users/routes/UserRouter';
 import { request } from 'http';
-import sessionRoutes from '../../../modules/users/routes/session.routes';
+import sessionRoutes from '../../../modules/users/routes/SessionRouter';
 
 const routes = Router();
 
