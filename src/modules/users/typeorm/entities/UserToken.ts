@@ -11,4 +11,10 @@ export default class UserToken {
 
   @Column()
   user_id: string;
+
+  @Column()
+  created_at: Date;
+
+  @Column()
+  updated_at: Date;
 }
