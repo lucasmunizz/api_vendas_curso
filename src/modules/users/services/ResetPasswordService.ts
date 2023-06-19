@@ -11,7 +11,7 @@ interface IRequest {
   password: string;
 }
 
-export default class SendForgotPasswordEmailService {
+export default class ResetPasswordService {
   public async execute({ token, password }: IRequest): Promise<void> {
     const usersRepository = getCustomRepository(UsersRepository);
 
