@@ -8,8 +8,8 @@ interface IRequest {
   id: string;
 }
 
-export default class ShowCustomerService {
-  public async execute({ id }: IRequest): Promise<Customer> {
+export default class DeleteCustomerService {
+  public async execute({ id }: IRequest): Promise<void> {
     const customersRepository = getCustomRepository(CustomersRepository);
 
     const customer = await customersRepository.findById(id);
@@ -18,6 +18,6 @@ export default class ShowCustomerService {
       throw new AppError('Customer not found', 404);
     }
 
-    return customer;
+    await customersRepository.remove(customer);
   }
 }
