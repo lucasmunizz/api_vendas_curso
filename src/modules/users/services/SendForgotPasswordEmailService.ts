@@ -1,8 +1,6 @@
 import AppError from '../../../shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import User from '../typeorm/entities/User';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
-import { hash } from 'bcryptjs';
 import UsersTokenRepository from '../typeorm/repositories/UsersTokensRepository';
 import EtherealMail from '../../../config/mail/EtherealMail';
 
@@ -22,11 +20,21 @@ export default class SendForgotPasswordEmailService {
       throw new AppError('User not found');
     }
 
-    const token = await userTokensRepository.generate(user.id);
+    const { token } = await userTokensRepository.generate(user.id);
 
     await EtherealMail.sendMail({
-      to: email,
-      body: `Solicitação de redefinição de senha de: ${token?.token}`,
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[API VENDAS] - Redefinição de senha',
+      templateData: {
+        template: `Olá {{name}}: {{token}}`,
+        variables: {
+          name: user.name,
+          token,
+        },
+      },
     });
   }
 }
