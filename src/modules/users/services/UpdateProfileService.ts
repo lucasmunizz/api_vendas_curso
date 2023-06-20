@@ -39,7 +39,7 @@ export default class UpdateProfileService {
     }
 
     if (password && old_password) {
-      const oldPasswordChecked = await compare(password, user.password);
+      const oldPasswordChecked = await compare(old_password, user.password);
 
       if (!oldPasswordChecked) {
         throw new AppError('Old password does not match');

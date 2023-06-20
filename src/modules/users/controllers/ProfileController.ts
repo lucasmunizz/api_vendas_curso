@@ -8,7 +8,7 @@ export default class ProfileController {
 
     const showUserService = new ShowProfileService();
 
-    const user = showUserService.execute({ user_id });
+    const user = await showUserService.execute({ user_id });
 
     return response.json(user);
   }
@@ -20,7 +20,7 @@ export default class ProfileController {
 
     const updateUserService = new UpdateProfileService();
 
-    const updatedUser = updateUserService.execute({
+    const updatedUser = await updateUserService.execute({
       user_id,
       name,
       email,

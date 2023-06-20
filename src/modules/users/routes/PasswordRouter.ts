@@ -1,9 +1,7 @@
 import { Router } from 'express';
-import SessionController from '../controllers/SessionController';
 import { Segments, celebrate, Joi } from 'celebrate';
 import ForgotPasswordController from '../controllers/ForgotPasswordController';
 import ResetPasswordController from '../controllers/ResetPasswordController';
-import { ref } from 'joi';
 
 const passwordRoutes = Router();
 const forgotPasswordController = new ForgotPasswordController();
