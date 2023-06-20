@@ -29,7 +29,7 @@ export default class SendForgotPasswordEmailService {
       },
       subject: '[API VENDAS] - Redefinição de senha',
       templateData: {
-        template: `Olá {{name}}: {{token}}`,
+        file: `Olá {{name}}: {{token}}`,
         variables: {
           name: user.name,
           token,
