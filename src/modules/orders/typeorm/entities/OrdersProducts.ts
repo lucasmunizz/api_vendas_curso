@@ -1,4 +1,3 @@
-import Customer from 'src/modules/customers/typeorm/entities/Customer';
 import {
   Column,
   CreateDateColumn,
@@ -12,7 +11,7 @@ import Order from './Order';
 import Product from '../../../products/typeorm/entities/Product';
 
 @Entity('orders_products')
-class OrderProducts {
+export default class OrdersProducts {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,7 +20,14 @@ class OrderProducts {
   order: Order;
 
   @ManyToOne(() => Product, product => product.order_products)
+  @JoinColumn({ name: 'product_id' })
   product: Product;
+
+  @Column()
+  order_id: string;
+
+  @Column()
+  product_id: string;
 
   @Column('decimal')
   price: number;
@@ -35,5 +41,3 @@ class OrderProducts {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export default OrderProducts;
