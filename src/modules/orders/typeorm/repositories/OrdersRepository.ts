@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Order from '../entities/Order';
 import Customer from '../../../customers/typeorm/entities/Customer';
-import Product from 'src/modules/products/typeorm/entities/Product';
+import Product from '../../../products/typeorm/entities/Product';
 
 interface IProduct {
   product_id: string;
@@ -15,12 +15,10 @@ interface IRequest {
 }
 
 @EntityRepository(Order)
-class CustomersRepository extends Repository<Order> {
+class OrdersRepository extends Repository<Order> {
   public async findById(id: string): Promise<Customer | undefined> {
-    const customer = this.findOne({
-      where: {
-        id,
-      },
+    const customer = this.findOne(id, {
+      relations: ['order_products', 'customer'],
     });
 
     return customer;
@@ -36,4 +34,4 @@ class CustomersRepository extends Repository<Order> {
   }
 }
 
-export default CustomersRepository;
+export default OrdersRepository;
