@@ -29,11 +29,21 @@ export default class CreateProductService {
 
     const existsProducts = await productsRepository.findAllByIds(products);
 
-    const product = productsRepository.create({
-      name,
-      price,
-      quantity,
-    });
+    if (!existsProducts.length) {
+      throw new AppError('Could not find products with the given ids');
+    }
+
+    const existsProductsIds = existsProducts.map(product => product.id);
+
+    const checkInexistentsProducts = products.filter(
+      product => !existsProductsIds.includes(product.id),
+    );
+
+    if (checkInexistentsProducts.length) {
+      throw new AppError(
+        `Could not find product ${checkInexistentsProducts[0].id}`,
+      );
+    }
 
     await productsRepository.save(product);
 
