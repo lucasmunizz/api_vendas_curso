@@ -16,7 +16,7 @@ interface IRequest {
   products: IProduct[];
 }
 
-export default class CreateProductService {
+export default class CreateOrderService {
   public async execute({ customer_id, products }: IRequest): Promise<Order> {
     const productsRepository = getCustomRepository(ProductRepository);
     const customersRepository = getCustomRepository(CustomersRepository);

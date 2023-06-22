@@ -16,12 +16,12 @@ interface IRequest {
 
 @EntityRepository(Order)
 class OrdersRepository extends Repository<Order> {
-  public async findById(id: string): Promise<Customer | undefined> {
-    const customer = this.findOne(id, {
+  public async findById(id: string): Promise<Order | undefined> {
+    const order = this.findOne(id, {
       relations: ['order_products', 'customer'],
     });
 
-    return customer;
+    return order;
   }
 
   public async createOrder({ customer, products }: IRequest): Promise<Order> {
