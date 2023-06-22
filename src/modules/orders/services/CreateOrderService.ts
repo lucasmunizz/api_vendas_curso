@@ -79,6 +79,7 @@ export default class CreateOrderService {
     }));
 
     console.log(updatedProductQuantity);
+    console.log(order);
 
     await productsRepository.save(updatedProductQuantity);
 
