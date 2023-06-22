@@ -1,5 +1,6 @@
 import AppError from '../../../shared/errors/AppError';
-import Product from '../typeorm/entities/Product';
+import Product from '../../products/typeorm/entities/Product';
+import Order from '../typeorm/entities/Order';
 import { ProductRepository } from '../../products/typeorm/repositories/ProductRepository';
 import OrdersRepository from '../typeorm/repositories/OrdersRepository';
 import CustomersRepository from '../../customers/typeorm/repositories/CustomersRepository';
@@ -16,7 +17,7 @@ interface IRequest {
 }
 
 export default class CreateProductService {
-  public async execute({ customer_id, products }: IRequest): Promise<Product> {
+  public async execute({ customer_id, products }: IRequest): Promise<Order> {
     const productsRepository = getCustomRepository(ProductRepository);
     const customersRepository = getCustomRepository(CustomersRepository);
     const ordersRepository = getCustomRepository(OrdersRepository);
@@ -67,6 +68,17 @@ export default class CreateProductService {
       customer: customerExists,
       products: serializedProdcuts,
     });
+
+    const { order_products } = order;
+
+    const updatedProductQuantity = order_products.map(product => ({
+      id: product.id,
+      quantity:
+        existsProducts.filter(p => p.id === product.id)[0].quantity -
+        product.quantity,
+    }));
+
+    await productsRepository.save(updatedProductQuantity);
 
     return order;
   }
