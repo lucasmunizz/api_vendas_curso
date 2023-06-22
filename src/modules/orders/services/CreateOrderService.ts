@@ -1,5 +1,4 @@
 import AppError from '../../../shared/errors/AppError';
-import Product from '../../products/typeorm/entities/Product';
 import Order from '../typeorm/entities/Order';
 import { ProductRepository } from '../../products/typeorm/repositories/ProductRepository';
 import OrdersRepository from '../typeorm/repositories/OrdersRepository';
