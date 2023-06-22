@@ -57,8 +57,17 @@ export default class CreateProductService {
       );
     }
 
-    await productsRepository.save(product);
+    const serializedProdcuts = products.map(product => ({
+      product_id: product.id,
+      quantity: product.quantity,
+      price: existsProducts.filter(p => p.id === product.id)[0].price,
+    }));
 
-    return product;
+    const order = await ordersRepository.createOrder({
+      customer: customerExists,
+      products: serializedProdcuts,
+    });
+
+    return order;
   }
 }
